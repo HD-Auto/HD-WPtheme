@@ -1,0 +1,79 @@
+# File: /Users/brodieowens/Code/VUE/woonuxt-4.4.13/woonuxt_base/app/queries/fragments/VariableProduct.gql
+
+fragment VariableProduct on VariableProduct {
+  name
+  slug
+  price
+  rawPrice: price(format: RAW)
+  date
+  weight
+  length
+  width
+  height
+  image {
+    ...Image
+    cartSourceUrl: sourceUrl(size: THUMBNAIL)
+    producCardSourceUrl: sourceUrl(size: WOOCOMMERCE_THUMBNAIL)
+  }
+  averageRating
+  reviewCount
+  onSale
+  regularPrice
+  rawRegularPrice: regularPrice(format: RAW)
+  salePrice
+  rawSalePrice: salePrice(format: RAW)
+  stockStatus
+  totalSales
+  stockQuantity
+  lowStockAmount
+  # ADD THIS BLOCK FOR TOP-LEVEL ATTRIBUTES (that apply to the parent variable product)
+  attributes {
+    nodes {
+      # This reuses your ProductAttribute fragment which you defined in getProduct.gql
+      # Ensure ProductAttribute fragment is accessible (either in getProduct.gql or imported if your setup allows)
+      ...ProductAttribute
+    }
+  }
+  defaultAttributes {
+    nodes {
+      ...VariationAttribute
+    }
+  }
+  variations(first: 100) {
+    nodes {
+      name
+      databaseId
+      price
+      regularPrice
+      salePrice
+      rawSalePrice: salePrice(format: RAW)
+      slug
+      stockQuantity
+      stockStatus
+      hasAttributes
+      image {
+        ...Image
+        cartSourceUrl: sourceUrl(size: THUMBNAIL)
+        producCardSourceUrl: sourceUrl(size: WOOCOMMERCE_THUMBNAIL)
+      }
+      attributes {
+        nodes {
+          ...VariationAttribute
+        }
+      }
+    }
+  }
+  galleryImages(first: 20) {
+    nodes {
+      ...Image
+      databaseId
+    }
+  }
+}
+
+fragment VariationAttribute on VariationAttribute {
+  name
+  attributeId
+  value
+  label
+}

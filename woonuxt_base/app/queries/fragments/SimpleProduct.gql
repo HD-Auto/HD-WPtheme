@@ -1,0 +1,43 @@
+# File: /Users/brodieowens/Code/VUE/woonuxt-4.4.13/woonuxt_base/app/queries/fragments/SimpleProduct.gql
+
+fragment SimpleProduct on SimpleProduct {
+  name
+  slug
+  price
+  rawPrice: price(format: RAW)
+  date
+  regularPrice
+  rawRegularPrice: regularPrice(format: RAW)
+  salePrice
+  rawSalePrice: salePrice(format: RAW)
+  stockStatus
+  stockQuantity
+  lowStockAmount
+  averageRating
+  weight
+  length
+  width
+  height
+  reviewCount
+  onSale
+  virtual
+  image {
+    ...Image
+    cartSourceUrl: sourceUrl(size: THUMBNAIL)
+    producCardSourceUrl: sourceUrl(size: WOOCOMMERCE_THUMBNAIL)
+  }
+  galleryImages(first: 20) {
+    nodes {
+      ...Image
+      databaseId
+    }
+  }
+  # ADD THIS BLOCK FOR ATTRIBUTES
+  attributes {
+    nodes {
+      # This reuses your ProductAttribute fragment which you defined in getProduct.gql
+      # Ensure ProductAttribute fragment is accessible (either in getProduct.gql or imported if your setup allows)
+      ...ProductAttribute
+    }
+  }
+}
